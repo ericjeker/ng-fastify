@@ -1,0 +1,25 @@
+{
+  "name": "ng-fastify",
+  "version": "1.0.0",
+  "description": "Fastify Engine for running Angular Universal",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ericjeker/ng-fastify.git"
+  },
+  "keywords": [
+    "fastify",
+    "ssr",
+    "universal",
+    "angular"
+  ],
+  "author": "Eric Jeker <eric@wowww.ch>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ericjeker/ng-fastify/issues"
+  },
+  "homepage": "https://github.com/ericjeker/ng-fastify#readme"
+}
