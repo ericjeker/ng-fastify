@@ -18,4 +18,9 @@ the `view` decorator.
 
 The value returned by the engine is sent back to the client as the body of the response.
 
+## Todo
 
+[] Add tests
+[] Add load of documentation, including how to install
+[] Create an example project
+[] Create a schematic for easy integration
