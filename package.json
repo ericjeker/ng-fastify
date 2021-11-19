@@ -1,6 +1,6 @@
 {
   "name": "ng-fastify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fastify Engine for running Angular Universal",
   "keywords": [
     "fastify",
