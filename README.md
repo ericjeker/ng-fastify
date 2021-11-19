@@ -2,7 +2,7 @@
 
 Fastify Engine for running Angular Universal
 
-## Explanations
+## Description
 
 ng-fastify create a `CommonEngine` with the setup options passed to the `ngFastifyEngine`.
 
@@ -17,6 +17,37 @@ This interceptor then simply set the `content-type` of the reply to `text/html` 
 the `view` decorator.
 
 The value returned by the engine is sent back to the client as the body of the response.
+
+## Install
+
+npm i --save ng-fastify
+
+## Example
+
+In `/example` you will a standard Angular application generate by `ng new` on which
+we have added SSR render using `ng-fastify`.
+
+The changes made are as following :
+
+Install `ng-fastify`
+Install `@angular/platform-server`
+Install `@nguniversal/builders`
+Install `fastify`
+Install `fastify-static`
+
+Create `server.ts`
+Create `src/main.server.ts`
+Create `src/app/app.server.module.ts`
+Create `tsconfig.server.json`
+
+Change `app.module.ts` to add server transition and appId
+Change `angular.json` - Added `server`, `serve`, and `prerender` architects 
+Change `package.json` - Added `server`, `serve`, and `prerender` scripts
+
+If you apply those changes to your own project, and make sure you change the occurences
+of `example` to the name of your own application, you should have a working SSR setup
+using Fastify.
+
 
 ## Todo
 
