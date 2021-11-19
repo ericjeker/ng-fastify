@@ -3,12 +3,13 @@ import { FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify';
 import { CommonEngine, RenderOptions as CommonRenderOptions } from '@nguniversal/common/engine';
 import { APP_BASE_HREF } from '@angular/common';
 import { StaticProvider } from '@angular/core';
-import { REQUEST, RESPONSE } from 'tokens';
+import { REQUEST, RESPONSE } from '../tokens';
 
 /**
  * These are the allowed options for the engine
  */
-export type NgSetupOptions = Pick<CommonRenderOptions,
+export type NgFastifyOptions = {filePath: string};
+export type NgSetupOptions = NgFastifyOptions & Pick<CommonRenderOptions,
   'bootstrap' | 'providers' | 'publicPath' | 'inlineCriticalCss'>;
 
 /**
@@ -40,34 +41,28 @@ export const ngFastifyEngine = (
 ): FastifyPluginCallback => {
   const engine = new CommonEngine(setupOptions.bootstrap, setupOptions.providers);
 
-  // Return the plugin factory, this MUST be synchronous
-  return function ngFastifyPlugin(fastify) {
-    const renderOptions = { ...setupOptions } as CommonRenderOptions;
+  // Return the plugin factory
+  return async function ngFastifyPlugin(fastify) {
+    const { filePath, ...remaining } = setupOptions;
+    const renderOptions = remaining as CommonRenderOptions;
     if (!setupOptions.bootstrap && !renderOptions.bootstrap) {
       throw new Error('You must pass in a NgModule to be bootstrapped');
     }
 
     // Generate the Fastify decorator
     fastify.decorateReply('view', (request: FastifyRequest, reply: FastifyReply): Promise<string> => {
-      renderOptions.url = renderOptions.url || `${request.protocol}://${request.hostname || ''}${request.url}`;
-      // @ts-ignore
-      renderOptions.documentFilePath = renderOptions.documentFilePath || fastify.filePath || 'index.html';
+      renderOptions.url = `${request.protocol}://${request.hostname || ''}${request.url}` || renderOptions.url || '/';
+      renderOptions.documentFilePath = renderOptions.documentFilePath || filePath || 'index.html';
       renderOptions.providers = [
         ...(renderOptions.providers || []),
         { provide: APP_BASE_HREF, useValue: fastify.prefix },
         getReqProviders(request, reply),
       ];
 
-      console.log(`URL: ${renderOptions.url}`);
-
       return engine.render(renderOptions);
     });
 
-    fastify.get('/*', (req, reply) => {
-      console.log(`Route: ${req.url}`);
-
-      // @ts-ignore
-      return reply.header('content-type', 'text/html').view(req, reply);
-    });
+    // @ts-ignore
+    fastify.get('/*', (req, reply) => reply.header('content-type', 'text/html').view(req, reply));
   };
 };

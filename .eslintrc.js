@@ -15,6 +15,7 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
+    "import/extensions": [2, "never"]
   },
   // other configuration are omitted for brevity
   settings: {

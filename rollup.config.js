@@ -1,9 +1,24 @@
 import typescript from '@rollup/plugin-typescript';
+import dts from 'rollup-plugin-dts';
 
-export default {
-  input: 'index.ts',
-  output: {
-    dir: 'lib'
+export default [
+  {
+    input: 'src/main.ts',
+    output: {
+      format: 'cjs',
+      dir: 'lib',
+    },
+    plugins: [
+      typescript({ tsconfig: './tsconfig.json' }),
+    ]
   },
-  plugins: [typescript()]
-};
+  {
+    input: "types/main.d.ts",
+    output: [
+      { file: "main.d.ts", format: "es" }
+    ],
+    plugins: [
+      dts()
+    ],
+  },
+];
