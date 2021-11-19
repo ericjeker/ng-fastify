@@ -18,40 +18,43 @@ the `view` decorator.
 
 The value returned by the engine is sent back to the client as the body of the response.
 
-## Install
-
-npm i --save ng-fastify
-
-## Example
+## Installation and Example
 
 In `/example` you will a standard Angular application generate by `ng new` on which
 we have added SSR render using `ng-fastify`.
 
 The changes made are as following :
 
-Install `ng-fastify`
-Install `@angular/platform-server`
-Install `@nguniversal/builders`
-Install `fastify`
-Install `fastify-static`
+```shell
+npm i --save ng-fastify @angular/platform-server @nguniversal/builders fastify fastify-static
+```
 
-Create `server.ts`
-Create `src/main.server.ts`
-Create `src/app/app.server.module.ts`
-Create `tsconfig.server.json`
+- Create `server.ts`
+- Create `src/main.server.ts`
+- Create `src/app/app.server.module.ts`
+- Create `tsconfig.server.json`
 
-Change `app.module.ts` to add server transition and appId
-Change `angular.json` - Added `server`, `serve`, and `prerender` architects 
-Change `package.json` - Added `server`, `serve`, and `prerender` scripts
+
+- Change `app.module.ts` to add server transition and appId
+- Change `angular.json` - Added `server`, `serve`, and `prerender` architects 
+- Change `package.json` - Added `server`, `serve`, and `prerender` scripts
 
 If you apply those changes to your own project, and make sure you change the occurences
 of `example` to the name of your own application, you should have a working SSR setup
 using Fastify.
 
+You can then run:
+
+```shell
+npm run dev:ssr
+```
 
 ## Todo
 
-[] Add tests
-[] Add load of documentation, including how to install
-[] Create an example project
-[] Create a schematic for easy integration
+[x] Add documentation, including how to install
+
+[x] Create an example project
+
+[ ] Create a schematic for easy integration
+
+[ ] Add automated tests
